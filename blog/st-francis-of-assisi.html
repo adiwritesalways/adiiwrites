@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
+  
+  <!-- SEO & Content Architecture Meta Tags -->
+  <meta name="description" content="An in-depth exploration of St. Francis of Assisi's revolutionary ministry, the structural rise of the Franciscan Orders, his eco-theology, and an analysis of medieval ascetic marital paradigms." />
+  <meta name="post-title" content="St. Francis of Assisi: A Revolutionary Voice in Christianity" />
+  <meta name="post-excerpt" content="From a wealthy merchant's son to an icon of radical poverty and cosmic kinship, discover the historical and philosophical impact of St. Francis of Assisi." />
+  <meta name="post-date" content="May 25, 2026" />
+  <meta name="post-category" content="History/Personas/Religion" />
+  <meta name="post-readtime" content="5 min" />
+  
+  <title>St. Francis of Assisi: A Revolutionary Voice in Christianity — Adiwrites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;550;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:         #0d0f14;
+      --surface:    #13161e;
+      --text:       #f0ece4;
+      --muted:      rgba(232,226,217,0.42);
+      --muted2:     rgba(232,226,217,0.13);
+      --accent:     #C8F06E;
+      --border:     rgba(255,255,255,0.07);
+      --border2:    rgba(255,255,255,0.12);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'DM Mono', monospace;
+      --font-sans:  'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(200,240,110,0.05), transparent 35rem),
+        radial-gradient(circle at 88% 16%, rgba(240,236,228,0.02), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.74;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 75%);
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    /* ════ NAVBAR ════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,15,20,0.75);
+      backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+    }
+    .nav-logo { font-family: var(--font-sans); font-weight: 550; font-size: 26px; letter-spacing: -0.05em; color: var(--text); line-height: 1; }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s ease; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { width: 100%; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 4px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--muted); transition: all 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--text); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--text); }
+    .nav-mobile { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(13,15,20,0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 32px 48px; z-index: 99; flex-direction: column; gap: 28px; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-mobile a:hover, .nav-mobile a.active { color: var(--accent); }
+
+    /* ════ PAGE SHELL ════ */
+    .page-shell {
+      position: relative; z-index: 1;
+      width: min(100% - 32px, 1140px);
+      margin: 0 auto;
+      padding: 110px 0 80px;
+    }
+
+    /* ════ BUTTONS ════ */
+    .eyebrow-button, .share-button, .all-essays-button {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px; min-height: 42px;
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      background: rgba(19,22,30,0.6);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+    }
+    .eyebrow-button { padding: 12px 26px; }
+    .eyebrow-button:hover, .share-button:hover, .all-essays-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(200,240,110,0.4);
+      color: var(--accent);
+      background: rgba(200,240,110,0.04);
+    }
+
+    /* ════ POST HERO ════ */
+    .post-hero { padding: 45px 0 32px; }
+    .post-kicker { display: flex; margin-bottom: 35px; }
+    .post-title { margin: 0; max-width: 960px; font-family: var(--font-serif); font-size: clamp(2.6rem, 5.5vw, 68px); font-weight: 500; letter-spacing: -2px; line-height: 0.94; }
+    .post-dek { max-width: 820px; margin: 28px 0 0; color: rgba(240,236,228,0.76); font-family: var(--font-serif); font-size: clamp(1.2rem, 2vw, 28px); line-height: 1.34; }
+    
+    .post-meta-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px;
+      color: var(--muted); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.045em; text-transform: uppercase;
+    }
+    .meta-dot { width: 4px; height: 4px; border-radius: 999px; background: var(--accent); opacity: 0.8; }
+
+    .author-strip { display: flex; align-items: center; gap: 14px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .author-avatar {
+      display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--border2); border-radius: 50%;
+      background: linear-gradient(135deg, rgba(200,240,110,0.15), rgba(255,255,255,0.02));
+      color: var(--accent); font-family: var(--font-mono); font-size: 0.82rem; flex-shrink: 0;
+    }
+    .author-label { color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .author-name { margin-top: 2px; color: var(--text); font-size: 0.98rem; }
+
+    /* ════ ARTICLE BOX ════ */
+    .article-box {
+      position: relative; margin-top: 20px; padding: clamp(28px, 5vw, 58px);
+      border: 1px solid var(--border); border-radius: 30px; background: var(--surface);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35); overflow: hidden;
+    }
+    .article-box::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent 30%, transparent 70%, rgba(200,240,110,0.02));
+    }
+    .article-content { position: relative; z-index: 1; }
+
+    /* ════ ARTICLE TYPOGRAPHY ════ */
+    .article-content p { margin: 0 0 1.45em; color: rgba(240,236,228,0.85); font-family: var(--font-serif); font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.72; }
+    .article-content p:first-of-type::first-letter { float: left; margin: 0.08em 0.12em 0 0; color: var(--accent); font-family: var(--font-serif); font-size: 4.8em; line-height: 0.76; }
+    .article-content h2 { margin: 2em 0 0.45em; color: var(--text); font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 45px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.05; }
+    .article-content h3 { margin: 1.6em 0 0.4em; color: rgba(240,236,228,0.92); font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 28px); font-weight: 400; }
+    .article-content ul { margin: 0 0 1.5em 1.2em; color: rgba(240,236,228,0.85); font-family: var(--font-serif); font-size: clamp(1.15rem, 2vw, 1.35rem); }
+    .article-content li { margin-bottom: 0.8em; line-height: 1.6; }
+    .article-content li strong { color: var(--text); font-weight: 500; }
+    .article-content blockquote { margin: 1.8em 0; padding: 4px 0 4px 24px; border-left: 2px solid var(--accent); color: rgba(240,236,228,0.7); font-family: var(--font-serif); font-style: italic; font-size: clamp(1.25rem, 2.2vw, 1.55rem); line-height: 1.6; }
+    .article-content p:last-child { margin-bottom: 0; }
+
+    /* ════ SHARE FOOTER ════ */
+    .share-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin-top: 32px; padding: 22px 0 0; border-top: 1px solid var(--border); }
+    .share-label { color: var(--muted); font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.09em; text-transform: uppercase; }
+    .share-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .share-button { padding: 0 22px; border: 1px solid var(--border2); }
+
+    /* ════ MORE ESSAYS ════ */
+    .more-essays { margin-top: 86px; }
+    .section-heading-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .section-label { color: var(--accent); font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+    .section-title { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 52px); font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
+    
+    .all-essays-link {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 8px; transition: color 0.2s, gap 0.2s; white-space: nowrap;
+    }
+    .all-essays-link:hover { color: var(--accent); gap: 14px; }
+
+    /* Essay cards */
+    .essay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .essay-card {
+      display: flex; flex-direction: column; justify-content: space-between; padding: 32px 28px;
+      border: 1px solid var(--border); border-radius: 26px; background: rgba(19,22,30,0.4); min-height: 240px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; position: relative; overflow: hidden;
+    }
+    .essay-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .essay-card:hover { transform: translateY(-4px); border-color: rgba(200,240,110,0.3); background: rgba(19,22,30,0.75); }
+    .essay-card:hover::before { transform: scaleX(1); }
+
+    .card-meta { color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 16px; }
+    .card-title { font-family: var(--font-serif); font-size: clamp(1.3rem, 2.2vw, 1.9rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; color: var(--text); flex: 1; margin-bottom: 20px; }
+    .card-excerpt { color: rgba(232,226,217,0.56); font-family: var(--font-sans); font-size: 0.88rem; font-weight: 300; line-height: 1.6; margin-bottom: 20px; }
+    .card-link { color: var(--accent); font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .all-essays-wrap { display: flex; justify-content: center; margin-top: 40px; }
+    .all-essays-button { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border2); border-radius: 0; background: transparent; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s; }
+    .all-essays-button:hover { color: var(--accent); border-color: var(--accent); transform: none; background: transparent; }
+
+    /* ════ FOOTER ════ */
+    .footer { position: relative; z-index: 1; padding: 32px 0; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 80px; }
+    .footer-logo { font-family: var(--font-sans); font-weight: 500; font-size: 18px; letter-spacing: -0.05em; color: var(--text); }
+    .footer-copy { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
+
+    /* ════ RESPONSIVE ════ */
+    @media (max-width: 860px) {
+      .nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { padding: 32px 24px; }
+      .section-heading-row { flex-direction: column; align-items: flex-start; }
+      .essay-grid { grid-template-columns: 1fr; gap: 0; }
+      .essay-card { min-height: auto; border-radius: 20px; }
+    }
+
+    @media (max-width: 560px) {
+      .post-title { letter-spacing: -1px; }
+      .post-meta-row { gap: 10px; }
+      .meta-dot { display: none; }
+      .author-strip, .share-footer { flex-direction: column; align-items: flex-start; }
+      .article-content p:first-of-type::first-letter { font-size: 3.8em; }
+      .footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">adiwrites</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../blog.html" class="active">Blog</a></li>
+      <li><a href="../quotes.html">Quotes</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../index.html">Home</a>
+    <a href="../blog.html" class="active">Blog</a>
+    <a href="../quotes.html">Quotes</a>
+    <a href="../contact.html">Contact</a>
+  </div>
+
+  <main class="page-shell">
+
+    <!-- POST HERO -->
+    <header class="post-hero">
+      <div class="post-kicker">
+        <a href="../blog.html" class="eyebrow-button" aria-label="Back to blog">← Back to blog</a>
+      </div>
+
+      <h1 class="post-title">St. Francis of Assisi: A Revolutionary Voice in Christianity</h1>
+
+      <p class="post-dek">Exploring the radical transformation of a wealthy merchant’s heir into an icon of absolute poverty, ecological kinship, and deep medieval mysticism.</p>
+
+      <div class="post-meta-row" aria-label="Post metadata">
+        <span>History/Personas/Religion</span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>May 25, 2026</span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>5 min read</span>
+      </div>
+
+      <div class="author-strip">
+        <div class="author-avatar" aria-hidden="true">HA</div>
+        <div>
+          <p class="author-label">Written by</p>
+          <p class="author-name">Hasib Ahmed Adib</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ARTICLE BOX -->
+    <article class="article-box">
+      <div class="article-content">
+        <p>Saint Francis of Assisi (1181/82–1226) remains one of the most enduring, transformative, and philosophically challenging figures in Christian history. Born Giovanni di Pietro di Bernardone into a highly prosperous merchant family in Assisi, Italy, his life split cleanly across a radical threshold of spiritual conversion. Choosing to systematically dismantle his inheritance, he abandoned material privilege to embrace absolute poverty, baseline humility, and an extensive cosmic love that forever expanded the structural boundaries of medieval Catholic thought.</p>
+
+        <h2>Early Life and Conversion</h2>
+        <p>In his youth, Francis participated fully in the privileges of the rising merchant class, indulging in aristocratic aesthetics, dynamic social revelry, and aspirations of military knighthood. However, a sequence of geopolitical conflicts, a period of harsh captivity, and a subsequent debilitating illness fundamentally fractured his existential worldview. The structural turning point occurred within the crumbling walls of the San Damiano chapel, where Francis experienced a profound mystical encounter before a crucifix, receiving the directive: <em>“Francis, rebuild my church, which is falling into ruins.”</em></p>
+        <p>Initially interpreting the command as a literal call for masonry and architectural renovation, he manually repaired localized chapel ruins. Over time, this evolved into an understanding of a systemic mission: a total spiritual renewal of the institutional Church through personal, uncompromised example. He formalized this rupture by dramatically returning his clothing and financial heritage to his father in the presence of the regional bishop, choosing a life of mendicant service and manual alignment with the marginalized.</p>
+
+        <h2>The Structural Rise of the Franciscan Orders</h2>
+        <p>In 1209, Francis and a growing band of companions sought formal papal validation from Pope Innocent III for a unique lifestyle rule. This catalyzed the establishment of the Friars Minor (Lesser Brothers), an order that completely subverted the traditional monastic framework of the era. Rather than withdrawing behind secure cloistered walls or accumulating monastic land holdings, the Franciscans operated as an itinerant brotherhood—preaching directly in dense urban markets and living in close proximity to lepers and the absolute poor.</p>
+        <p>This dynamic institutional vision expanded exponentially. Collaborating with Saint Clare of Assisi, Francis co-founded the Poor Clares (Order of St. Clare) to establish an austere, contemplative space for women. This was followed by the creation of the Third Order, an adaptive structure designed specifically for laypeople who wished to practice Franciscan principles of simplicity, peace, and systemic charity while remaining within their domestic and professional vocations.</p>
+
+        <h2>Key Historical Contributions</h2>
+        <ul>
+          <li><strong>Evangelical Poverty as Systemic Critique:</strong> By insisting on corporate and individual propertylessness, Francis challenged the immense wealth, political feudalism, and material corruption of the medieval Church, demonstrating that discipleship could be anchored in absolute vulnerability.</li>
+          <li><strong>Eco-Theology and the Canticle of the Sun:</strong> Francis completely re-framed the human relationship to the environment. His famous composition, the <em>Canticle of the Sun</em>, addresses elements as cosmic siblings—Brother Sun, Sister Moon, and Sister Earth—asserting that the material universe is not an object to be dominated, but a sacred mirror reflecting the divine.</li>
+          <li><strong>Interfaith Diplomacy:</strong> Amidst the profound violence of the Fifth Crusade, Francis crossed active battle lines in Egypt to achieve a peaceful audience with Sultan Al-Kamil. This dangerous cross-cultural engagement offered a rare alternative of dialogue and mutual respect during an era of systemic religious warfare.</li>
+          <li><strong>The Living Nativity and Mysticism:</strong> In 1223, he orchestrated the first live nativity scene in Greccio, radically democratizing devotion by rendering complex theological narratives accessible to the illiterate. His profound inner focus culminated in 1224 with the reception of the stigmata on Mount La Verna, marking the first thoroughly documented case of Christological physical mysticism in Western records.</li>
+        </ul>
+
+        <h2>On Ascetic Marital Paradigms in Medieval History</h2>
+        <p>In analyzing historical documents from the medieval religious landscape, one occasionally encounters rigorous, austere statements regarding domestic life, such as:</p>
+        <blockquote>“We will not sleep with our wife, we value virginity over everything and we love our wives like our own sisters.”</blockquote>
+        <p>It is crucial from a historical perspective to contextualize these ideas accurately. This particular expression does not align with mainstream Catholic or Orthodox theology, which has consistently affirmed the sacramental validity and goodness of marital relations. Instead, it echoes the stringent, encratite (self-controlled) currents that periodically arose on the fringes of the medieval world.</p>
+        <p>Such extreme ascetic ideals were common among dualistic movements like the Cathars (or Albigensians) of Southern Europe. The Cathar elite, known as the <em>perfecti</em>, maintained that the material universe was inherently flawed and consequently practiced total celibacy to avoid further entanglement in physical creation. Similarly, the phrase reflects the historical phenomenon of "spiritual marriage" or chaste cohabitation—a practice where devout couples voluntarily chose to live together as siblings in Christ. While individual rigorists pursued this as an expression of angelic purity, institutional authorities often viewed it with suspicion, warning against the spiritual pride inherent in such theological extremes.</p>
+        <p>St. Francis of Assisi did not promote this lifestyle for the general public or married laypeople. His theology was profoundly celebratory of physical creation, and the rules he authored for the Franciscan Third Order explicitly supported the integrity, stability, and natural relations of conventional family life. For Francis, the primary target of renunciation was not the natural family structure, but greed, pride, and institutional power.</p>
+
+        <h2>The Enduring Legacy</h2>
+        <p>Passing away on October 3, 1226, and canonized swiftly in 1228, Francis left a legacy that transcends traditional ecclesiastical boundaries. His life demonstrates that genuine spiritual insight functions not merely as abstract dogma, but as a direct, lived encounter with the sacred in the ordinary, the small, and the broken elements of our world.</p>
+      </div>
+
+      <!-- SHARE FOOTER -->
+      <div class="share-footer">
+        <span class="share-label">Share this essay</span>
+        <div class="share-actions">
+          <button class="share-button">Twitter</button>
+          <button class="share-button">Copy Link</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- MORE ESSAYS -->
+    <section class="more-essays">
+      <div class="section-heading-row">
+        <div>
+          <p class="section-label">Explore More</p>
+          <h2 class="section-title">Recent Writings</h2>
+        </div>
+        <a href="../blog.html" class="all-essays-link">All Essays &rarr;</a>
+      </div>
+
+      <div class="essay-grid">
+        <div class="essay-card">
+          <div>
+            <span class="card-meta">History</span>
+            <h3 class="card-title">Exploring Judaism: Origins, Spread, and Core Beliefs</h3>
+            <p class="card-excerpt">Tracing the journey of a covenant faith—from its ancestral Bronze Age roots and global migration to its shifting paradigms of divine names.</p>
+          </div>
+          <a href="#" class="card-link">Read Essay &rarr;</a>
+        </div>
+
+        <div class="essay-card">
+          <div>
+            <span class="card-meta">Philosophy</span>
+            <h3 class="card-title">Enlightenment Unveiled</h3>
+            <p class="card-excerpt">A journey through the origins, development, and branches of Buddhism from meditation process to global faith.</p>
+          </div>
+          <a href="#" class="card-link">Read Essay &rarr;</a>
+        </div>
+
+        <div class="essay-card">
+          <div>
+            <span class="card-meta">Philosophy</span>
+            <h3 class="card-title">Lucifer the Light Bearer</h3>
+            <p class="card-excerpt">Unveiling the cosmic catalyst of awakening and human consciousness from ancient mystery traditions.</p>
+          </div>
+          <a href="#" class="card-link">Read Essay &rarr;</a>
+        </div>
+      </div>
+
+      <div class="all-essays-wrap">
+        <a href="../blog.html" class="all-essays-button">Browse All Articles</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer page-shell">
+    <span class="footer-logo">adiwrites</span>
+    <span class="footer-copy">&copy; 2026 Adiwrites. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('nav-mobile');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
+
+<script>
+const lenis = new Lenis({
+  duration: 1.2, // Scroll duration
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function for smooth transitions
+  direction: 'vertical', // Scroll direction: vertical or horizontal
+  gestureDirection: 'vertical', // Gesture direction: vertical, horizontal, or both
+  smooth: true, // Enable smooth scrolling
+  mouseMultiplier: 1, // Mouse scroll speed multiplier
+  smoothTouch: false, // Disable smooth scrolling for touch devices
+  touchMultiplier: 2, // Touch scroll speed multiplier
+  infinite: false, // Disable infinite scroll
+});
+
+// Optional: Listen to scroll events
+lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+  console.log({ scroll, limit, velocity, direction, progress });
+});
+
+// Animation frame loop function
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+</script>
+
+
+<style>
+    
+    html  {
+    scroll-behavior: auto !important; /* Disables default smooth scrolling */
+}
+    
+    
+</style>
+
+</body>
+</html>

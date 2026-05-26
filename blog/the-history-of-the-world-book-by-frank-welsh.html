@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
+  
+  <!-- SEO & Content Architecture Meta Tags -->
+  <meta name="description" content="An in-depth look at Frank Welsh's The History of the World, a sweeping, masterfully illustrated single-volume chronicle that spans from prehistory to the 21st century." />
+  <meta name="post-title" content="The History of the World by Frank Welsh: A Sweeping Chronicle of Humanity" />
+  <meta name="post-excerpt" content="Frank Welsh's ambitious volume attempts to capture the entire sweep of human history in a single, accessible, and visually rich narrative." />
+  <meta name="post-date" content="May 25, 2026" />
+  <meta name="post-category" content="History/Books" />
+  <meta name="post-readtime" content="4 min" />
+  
+  <title>The History of the World by Frank Welsh: A Sweeping Chronicle of Humanity — Adiwrites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;550;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:         #0d0f14;
+      --surface:    #13161e;
+      --text:       #f0ece4;
+      --muted:      rgba(232,226,217,0.42);
+      --muted2:     rgba(232,226,217,0.13);
+      --accent:     #C8F06E;
+      --border:     rgba(255,255,255,0.07);
+      --border2:    rgba(255,255,255,0.12);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'DM Mono', monospace;
+      --font-sans:  'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(200,240,110,0.05), transparent 35rem),
+        radial-gradient(circle at 88% 16%, rgba(240,236,228,0.02), transparent 28rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.74;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.01) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 75%);
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+
+    /* ════ NAVBAR ════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 68px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,15,20,0.75);
+      backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+    }
+    .nav-logo { font-family: var(--font-sans); font-weight: 550; font-size: 26px; letter-spacing: -0.05em; color: var(--text); line-height: 1; }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--accent); transition: width 0.25s ease; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { width: 100%; }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 4px; }
+    .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--muted); transition: all 0.3s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--text); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--text); }
+    .nav-mobile { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(13,15,20,0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 32px 48px; z-index: 99; flex-direction: column; gap: 28px; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-mobile a:hover, .nav-mobile a.active { color: var(--accent); }
+
+    /* ════ PAGE SHELL ════ */
+    .page-shell {
+      position: relative; z-index: 1;
+      width: min(100% - 32px, 1140px);
+      margin: 0 auto;
+      padding: 110px 0 80px;
+    }
+
+    /* ════ BUTTONS ════ */
+    .eyebrow-button, .share-button, .all-essays-button {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px; min-height: 42px;
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      background: rgba(19,22,30,0.6);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background 180ms ease;
+    }
+    .eyebrow-button { padding: 12px 26px; }
+    .eyebrow-button:hover, .share-button:hover, .all-essays-button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(200,240,110,0.4);
+      color: var(--accent);
+      background: rgba(200,240,110,0.04);
+    }
+
+    /* ════ POST HERO ════ */
+    .post-hero { padding: 45px 0 32px; }
+    .post-kicker { display: flex; margin-bottom: 35px; }
+    .post-title { margin: 0; max-width: 960px; font-family: var(--font-serif); font-size: clamp(2.6rem, 5.5vw, 68px); font-weight: 500; letter-spacing: -2px; line-height: 0.94; }
+    .post-dek { max-width: 820px; margin: 28px 0 0; color: rgba(240,236,228,0.76); font-family: var(--font-serif); font-size: clamp(1.2rem, 2vw, 28px); line-height: 1.34; }
+    
+    .post-meta-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 34px;
+      color: var(--muted); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.045em; text-transform: uppercase;
+    }
+    .meta-dot { width: 4px; height: 4px; border-radius: 999px; background: var(--accent); opacity: 0.8; }
+
+    .author-strip { display: flex; align-items: center; gap: 14px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .author-avatar {
+      display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--border2); border-radius: 50%;
+      background: linear-gradient(135deg, rgba(200,240,110,0.15), rgba(255,255,255,0.02));
+      color: var(--accent); font-family: var(--font-mono); font-size: 0.82rem; flex-shrink: 0;
+    }
+    .author-label { color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .author-name { margin-top: 2px; color: var(--text); font-size: 0.98rem; }
+
+    /* ════ ARTICLE BOX ════ */
+    .article-box {
+      position: relative; margin-top: 20px; padding: clamp(28px, 5vw, 58px);
+      border: 1px solid var(--border); border-radius: 30px; background: var(--surface);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35); overflow: hidden;
+    }
+    .article-box::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), transparent 30%, transparent 70%, rgba(200,240,110,0.02));
+    }
+    .article-content { position: relative; z-index: 1; }
+
+    /* ════ ARTICLE TYPOGRAPHY ════ */
+    .article-content p { margin: 0 0 1.45em; color: rgba(240,236,228,0.85); font-family: var(--font-serif); font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.72; }
+    .article-content p:first-of-type::first-letter { float: left; margin: 0.08em 0.12em 0 0; color: var(--accent); font-family: var(--font-serif); font-size: 4.8em; line-height: 0.76; }
+    .article-content h2 { margin: 2em 0 0.45em; color: var(--text); font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 45px); font-weight: 300; letter-spacing: -0.03em; line-height: 1.05; }
+    .article-content h3 { margin: 1.6em 0 0.4em; color: rgba(240,236,228,0.92); font-family: var(--font-serif); font-size: clamp(1.4rem, 2.5vw, 28px); font-weight: 400; }
+    .article-content ul { margin: 0 0 1.5em 1.2em; color: rgba(240,236,228,0.85); font-family: var(--font-serif); font-size: clamp(1.15rem, 2vw, 1.35rem); }
+    .article-content li { margin-bottom: 0.8em; line-height: 1.6; }
+    .article-content li strong { color: var(--text); font-weight: 500; }
+    .article-content p:last-child { margin-bottom: 0; }
+
+    /* ════ SHARE FOOTER ════ */
+    .share-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin-top: 32px; padding: 22px 0 0; border-top: 1px solid var(--border); }
+    .share-label { color: var(--muted); font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.09em; text-transform: uppercase; }
+    .share-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .share-button { padding: 0 22px; border: 1px solid var(--border2); }
+
+    /* ════ MORE ESSAYS ════ */
+    .more-essays { margin-top: 86px; }
+    .section-heading-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .section-label { color: var(--accent); font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+    .section-title { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 52px); font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
+    
+    .all-essays-link {
+      font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 8px; transition: color 0.2s, gap 0.2s; white-space: nowrap;
+    }
+    .all-essays-link:hover { color: var(--accent); gap: 14px; }
+
+    /* Essay cards */
+    .essay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .essay-card {
+      display: flex; flex-direction: column; justify-content: space-between; padding: 32px 28px;
+      border: 1px solid var(--border); border-radius: 26px; background: rgba(19,22,30,0.4); min-height: 240px;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease; position: relative; overflow: hidden;
+    }
+    .essay-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+    }
+    .essay-card:hover { transform: translateY(-4px); border-color: rgba(200,240,110,0.3); background: rgba(19,22,30,0.75); }
+    .essay-card:hover::before { transform: scaleX(1); }
+
+    .card-meta { color: var(--muted); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 16px; }
+    .card-title { font-family: var(--font-serif); font-size: clamp(1.3rem, 2.2vw, 1.9rem); font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; color: var(--text); flex: 1; margin-bottom: 20px; }
+    .card-excerpt { color: rgba(232,226,217,0.56); font-family: var(--font-sans); font-size: 0.88rem; font-weight: 300; line-height: 1.6; margin-bottom: 20px; }
+    .card-link { color: var(--accent); font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .all-essays-wrap { display: flex; justify-content: center; margin-top: 40px; }
+    .all-essays-button { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border2); border-radius: 0; background: transparent; padding: 14px 28px; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s; }
+    .all-essays-button:hover { color: var(--accent); border-color: var(--accent); transform: none; background: transparent; }
+
+    /* ════ FOOTER ════ */
+    .footer { position: relative; z-index: 1; padding: 32px 0; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 80px; }
+    .footer-logo { font-family: var(--font-sans); font-weight: 500; font-size: 18px; letter-spacing: -0.05em; color: var(--text); }
+    .footer-copy { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
+
+    /* ════ RESPONSIVE ════ */
+    @media (max-width: 860px) {
+      .nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile { padding: 32px 24px; }
+      .section-heading-row { flex-direction: column; align-items: flex-start; }
+      .essay-grid { grid-template-columns: 1fr; gap: 0; }
+      .essay-card { min-height: auto; border-radius: 20px; }
+    }
+
+    @media (max-width: 560px) {
+      .post-title { letter-spacing: -1px; }
+      .post-meta-row { gap: 10px; }
+      .meta-dot { display: none; }
+      .author-strip, .share-footer { flex-direction: column; align-items: flex-start; }
+      .article-content p:first-of-type::first-letter { font-size: 3.8em; }
+      .footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">adiwrites</a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../blog.html" class="active">Blog</a></li>
+      <li><a href="../quotes.html">Quotes</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="../index.html">Home</a>
+    <a href="../blog.html" class="active">Blog</a>
+    <a href="../quotes.html">Quotes</a>
+    <a href="../contact.html">Contact</a>
+  </div>
+
+  <main class="page-shell">
+
+    <!-- POST HERO -->
+    <header class="post-hero">
+      <div class="post-kicker">
+        <a href="../blog.html" class="eyebrow-button" aria-label="Back to blog">← Back to blog</a>
+      </div>
+
+      <h1 class="post-title">The History of the World by Frank Welsh: A Sweeping Chronicle of Humanity</h1>
+
+      <p class="post-dek">Frank Welsh's ambitious volume stands as an attempt to capture the entire sweep of human history in a single, accessible volume, bringing a storyteller's flair to a grand, narrative-driven overview.</p>
+
+      <div class="post-meta-row" aria-label="Post metadata">
+        <span>History/Books</span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>May 25, 2026</span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>4 min read</span>
+      </div>
+
+      <div class="author-strip">
+        <div class="author-avatar" aria-hidden="true">HA</div>
+        <div>
+          <p class="author-label">Written by</p>
+          <p class="author-name">Hasib Ahmed Adib</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ARTICLE BOX -->
+    <article class="article-box">
+      <div class="article-content">
+        <p>Frank Welsh's <em>The History of the World: From the Dawn of Humanity to the Modern Age</em> stands as an ambitious attempt to capture the entire sweep of human history in a single, accessible volume. Published by Quercus (with editions appearing around 2011–2013), the book appeals to readers seeking a broad, narrative-driven overview rather than a narrowly academic treatise. Welsh, a prolific British historian and former international banker, brings a storyteller's flair to what could otherwise be an overwhelming subject.</p>
+
+        <h2>Who Was Frank Welsh?</h2>
+        <p>Frank Welsh (1931–2023) was born in Washington, County Durham, and educated at Magdalene College, Cambridge. After a successful career in international banking and business, he turned to writing history in his later years. He authored more than a dozen books, often focusing on colonial histories, British institutions, and global narratives.</p>
+        <p>Notable works include <em>A History of Hong Kong</em>, <em>A History of South Africa</em>, <em>The Battle for Christendom</em>, and <em>The Four Nations</em> (a history of the British Isles). His background in finance and public enterprise sometimes informed his perspectives on economic and imperial themes, but he was best known for clear, engaging prose that made complex histories approachable.</p>
+
+        <h2>Overview of the Book</h2>
+        <p>The History of the World begins remarkably early—almost 1.5 million years ago—with the emergence of <em>Homo erectus</em>, setting the stage for humanity's long journey. From prehistoric times, Welsh traces the development of civilizations across all continents, covering:</p>
+        <ul>
+          <li>The cradle of civilization in Mesopotamia, ancient Egypt, China, and Knossos (Minoan Crete)</li>
+          <li>Classical eras including the rise of the Greeks and Romans</li>
+          <li>The Middle Ages, the Enlightenment, and voyages of discovery</li>
+          <li>Colonial expansions, revolutions (such as the American Revolution), and industrial transformations</li>
+          <li>20th-century conflicts, the Cold War, decolonization, the War on Terror, and the rise of globalization</li>
+        </ul>
+        <p>The book emphasizes human growth, survival, and achievement, weaving together political, cultural, scientific, and social threads. It includes the stories of ordinary people alongside kings, conquerors, and inventors.</p>
+        <p>What sets this volume apart is its visual richness. Described as a "giant-sized" or "lavishly illustrated" edition in many listings (some large-format Barnes & Noble exclusives measured around 12" x 14.5"), it features over 300 maps, color photographs, timelines, and sidebars. These elements make it more than a text—it's a visual journey through time.</p>
+
+        <h2>Strengths and Style</h2>
+        <p>Welsh excels at masterly storytelling. He avoids dense academic jargon, opting instead for an epic, readable narrative that carries readers from cave dwellers to modern terrorism. The book provides insight into how events interconnect across regions and eras—how the Silk Road influenced cultures, how scientific discoveries reshaped societies, and how ideological movements sparked wars.</p>
+        <p>Reviewers often praise its breadth and accessibility. One calls it a "delightful read" detailing humanity's progression, while others highlight its value as an overarching overview of triumphs, tragedies, and disasters. It's particularly suited for general readers, students, or anyone wanting a single-volume reference that spans from prehistory to the contemporary world.</p>
+
+        <h2>Critiques and Limitations</h2>
+        <p>No single book can cover everything, and Welsh's work has its trade-offs. Some reviews note that its ambition leads to occasional superficial treatment of complex topics. It requires concentration (and perhaps supplementary reading) to fully grasp names, places, and events. A 2020 review pointed out both positive and negative aspects, suggesting it excels in broad perspective but may skim details in certain areas.</p>
+        <p>It isn't humorous in the vein of some popular histories (like Bill Bryson or Yuval Noah Harari's lighter touches), but rather straightforward and informative.</p>
+
+        <h2>Why It Matters Today</h2>
+        <p>In an era of specialization, books like Welsh's remind us of the value of big-picture history. It connects ancient migrations to modern globalization, showing how patterns of empire, innovation, conflict, and cooperation repeat and evolve. For anyone curious about "how we got here," it offers a compelling starting point—especially when paired with its striking illustrations.</p>
+        <p>Whether displayed on a coffee table or read cover-to-cover, <em>The History of the World</em> by Frank Welsh remains a handsome, engaging entry into the grand story of humankind. If you're seeking a comprehensive yet readable chronicle that spans from the dawn of our species to the challenges of the 21st century, this book delivers an epic and visually rewarding experience.</p>
+      </div>
+
+      <!-- SHARE FOOTER -->
+      <div class="share-footer">
+        <span class="share-label">Share this essay</span>
+        <div class="share-actions">
+          <button class="share-button">Twitter</button>
+          <button class="share-button">Copy Link</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- MORE ESSAYS -->
+    <section class="more-essays">
+      <div class="section-heading-row">
+        <div>
+          <p class="section-label">Explore More</p>
+          <h2 class="section-title">Recent Writings</h2>
+        </div>
+        <a href="../blog.html" class="all-essays-link">All Essays &rarr;</a>
+      </div>
+
+      <div class="essay-grid">
+        <div class="essay-card">
+          <div>
+            <span class="card-meta">History</span>
+            <h3 class="card-title">The Brotherhood of the Square and Compass</h3>
+            <p class="card-excerpt">A complete guide to Freemasonry, exploring the true history, rituals, and philosophy from medieval origins to modern myths.</p>
+          </div>
+          <a href="#" class="card-link">Read Essay &rarr;</a>
+        </div>
+
+        <div class="essay-card">
+          <div>
+            <span class="card-meta">Philosophy</span>
+            <h3 class="card-title">Enlightenment Unveiled</h3>
+            <p class="card-excerpt">A journey through the origins, development, and branches of Buddhism from meditation process to global faith.</p>
+          </div>
+          <a href="#" class="card-link">Read Essay &rarr;</a>
+        </div>
+
+        <div class="essay-card">
+          <div>
+            <span class="card-meta">Philosophy</span>
+            <h3 class="card-title">Lucifer the Light Bearer</h3>
+            <p class="card-excerpt">Unveiling the cosmic catalyst of awakening and human consciousness from ancient mystery traditions.</p>
+          </div>
+          <a href="#" class="card-link">Read Essay &rarr;</a>
+        </div>
+      </div>
+
+      <div class="all-essays-wrap">
+        <a href="../blog.html" class="all-essays-button">Browse All Articles</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer page-shell">
+    <span class="footer-logo">adiwrites</span>
+    <span class="footer-copy">&copy; 2026 Adiwrites. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('nav-mobile');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
+
+<script>
+const lenis = new Lenis({
+  duration: 1.2, // Scroll duration
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function for smooth transitions
+  direction: 'vertical', // Scroll direction: vertical or horizontal
+  gestureDirection: 'vertical', // Gesture direction: vertical, horizontal, or both
+  smooth: true, // Enable smooth scrolling
+  mouseMultiplier: 1, // Mouse scroll speed multiplier
+  smoothTouch: false, // Disable smooth scrolling for touch devices
+  touchMultiplier: 2, // Touch scroll speed multiplier
+  infinite: false, // Disable infinite scroll
+});
+
+// Optional: Listen to scroll events
+lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+  console.log({ scroll, limit, velocity, direction, progress });
+});
+
+// Animation frame loop function
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+</script>
+
+
+<style>
+    
+    html  {
+    scroll-behavior: auto !important; /* Disables default smooth scrolling */
+}
+    
+    
+</style>
+
+</body>
+</html>
