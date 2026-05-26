@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adiwrites — For Curious Minds</title>
+  <meta name="description" content="Adiwrites — A blog for curious minds. History, Philosophy, Religion, Personas, Books." />
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0f14;
+      --surface:   #13161e;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.12);
+      --text:      #ffffff;
+      --muted:     rgba(232,226,217,0.42);
+      --muted2:    rgba(232,226,217,0.18);
+      --accent:    #C8F06E;
+      --accent-dim: rgba(200,240,110,0.08);
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'DM Mono', monospace;
+      --font-sans:  'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ════════════════════════════════
+       NAVBAR
+    ════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13, 15, 20, 0.652);
+      backdrop-filter: blur(48px);
+      -webkit-backdrop-filter: blur(48px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-weight: 550;
+      font-size: 26px;
+      letter-spacing: -0.05em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--muted);
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--text); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--text); }
+
+    /* Mobile menu */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(13,15,20,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 48px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .nav-mobile.open { display: flex; transition: ease; }
+    .nav-mobile a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-mobile a:hover, .nav-mobile a.active { color: var(--accent); }
+
+    /* ════════════════════════════════
+       PAGE WRAPPER
+    ════════════════════════════════ */
+    .page {
+      position: relative;
+      z-index: 1;
+      padding-top: 68px;
+    }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 48px 64px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Decorative background line grid */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    /* Accent glow */
+    .hero-glow {
+      position: absolute;
+      top: -120px; right: -80px;
+      width: 420px; height: 420px; opacity: 0.8;
+      background: radial-gradient(circle, rgba(200,240,110,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(52px, 8vw, 108px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+
+    .hero-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-heading .line2 {
+      display: block;
+      padding-left: 80px;
+    }
+
+    .hero-sub {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    .btn-ghost {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border2);
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+
+    /* Hero right — category pills */
+    .hero-categories {
+      position: absolute;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.7s forwards;
+    }
+
+    .hero-cat-pill {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .hero-cat-pill:hover {
+      color: var(--accent);
+      border-color: rgba(200,240,110,0.3);
+    }
+
+    /* ════════════════════════════════
+       SECTION COMMONS
+    ════════════════════════════════ */
+    section {
+      padding: 96px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(34px, 4vw, 52px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-sub {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 56px;
+    }
+
+    /* ════════════════════════════════
+       FEATURED POSTS
+    ════════════════════════════════ */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+    }
+
+    .post-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+      transition: border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .post-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .post-card:hover { border-color: var(--border2); }
+    .post-card:hover::before { transform: scaleX(1); }
+
+    /* Large featured card */
+    .post-card.large {
+      grid-row: span 2;
+      min-height: 480px;
+      background: linear-gradient(160deg, #13161e 60%, rgba(200,240,110,0.03));
+    }
+
+    .post-card.large .post-title {
+      font-size: 30px;
+    }
+
+    .post-tag {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .post-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      color: var(--muted2);
+      margin-bottom: 20px;
+    }
+
+    .post-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 16px;
+      transition: color 0.2s;
+    }
+
+    .post-card:hover .post-title { color: rgba(255,255,255,0.85); }
+
+    .post-excerpt {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .post-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .post-meta {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    .post-read {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .post-card:hover .post-read {
+      color: var(--accent);
+      border-color: rgba(200,240,110,0.4);
+    }
+
+    /* Loading skeleton */
+    .post-card.skeleton { pointer-events: none; }
+    .skeleton-line {
+      background: linear-gradient(90deg, var(--border) 25%, rgba(255,255,255,0.05) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 2px;
+      height: 12px;
+      margin-bottom: 10px;
+    }
+    .skeleton-line.tall { height: 20px; margin-bottom: 16px; }
+    .skeleton-line.short { width: 40%; }
+    .skeleton-line.med { width: 70%; }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .posts-cta {
+      margin-top: 40px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* ════════════════════════════════
+       QUOTE TEASER — fixed height
+    ════════════════════════════════ */
+    .quote-section {
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-section::before {
+      content: '"';
+      position: absolute;
+      top: -40px; right: 40px;
+      font-family: var(--font-serif);
+      font-size: 320px;
+      color: var(--accent);
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .quote-inner {
+      max-width: 780px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Fixed-height quote stage — key fix */
+    .quote-stage {
+      /* Tall enough for the longest quote at any viewport */
+      min-height: 180px;
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .quote-stage { min-height: 260px; }
+    }
+
+    @media (max-width: 480px) {
+      .quote-stage { min-height: 320px; }
+    }
+
+    .quote-featured-text {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 3vw, 36px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--text);
+      border-left: 1px solid var(--accent);
+      padding-left: 32px;
+      /* Absolutely position so the stage height never shifts */
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .quote-featured-text.hidden {
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+
+    .quote-attr {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-left: 32px;
+      margin-bottom: 28px;
+      transition: opacity 0.35s ease;
+      min-height: 16px;
+    }
+
+    .quote-attr.hidden { opacity: 0; }
+
+    .quote-dots {
+      display: flex;
+      gap: 8px;
+      padding-left: 32px;
+      margin-bottom: 48px;
+    }
+
+    .quote-dot {
+      width: 6px; height: 6px;
+      border: 1px solid var(--muted2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quote-dot.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ════════════════════════════════
+       CATEGORIES SECTION
+    ════════════════════════════════ */
+    .cats-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+    }
+
+    .cat-card {
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+
+    .cat-card:hover {
+      border-color: var(--border2);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .cat-card:hover::after { transform: scaleX(1); }
+
+    .cat-icon {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-style: italic;
+      color: var(--accent);
+      opacity: 0.6;
+      line-height: 1;
+    }
+
+    .cat-name {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .cat-count {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      color: var(--muted2);
+    }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    .footer {
+      padding: 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: -0.05em;
+      color: var(--text);
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    /* ════════════════════════════════
+       ANIMATIONS
+    ════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-categories { display: none; }
+      .cats-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { padding: 60px 24px 80px; }
+
+      .hero-heading .line2 { padding-left: 0; }
+
+      section { padding: 64px 24px; }
+
+      .featured-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .post-card.large { grid-row: span 1; min-height: 260px; }
+      .post-card.large .post-title { font-size: 22px; }
+
+      .cats-grid { grid-template-columns: 1fr 1fr; }
+
+      .footer { padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .cats-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ════════════════════════════════
+       CONTACT SECTION
+    ════════════════════════════════ */
+    .contact-section {
+      background: var(--surface);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-form-col { max-width: 480px; }
+
+    .cf-field {
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .cf-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+
+    .cf-field:focus-within .cf-label { color: var(--accent); }
+
+    .cf-input,
+    .cf-textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 300;
+      padding: 10px 0 14px;
+      outline: none;
+      transition: border-color 0.3s;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      caret-color: var(--text);
+    }
+
+    .cf-textarea {
+      resize: none;
+      height: 90px;
+      display: block;
+    }
+
+    .cf-input::placeholder,
+    .cf-textarea::placeholder {
+      color: var(--muted2);
+      font-style: italic;
+    }
+
+    .cf-input:focus,
+    .cf-textarea:focus { border-bottom-color: var(--accent); }
+
+    .cf-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .cf-submit {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.35s;
+    }
+
+    .cf-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .cf-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateX(-101%);
+      transition: transform 0.35s ease;
+      z-index: 0;
+    }
+
+    .cf-submit:not(:disabled):hover::before { transform: translateX(0); }
+    .cf-submit:not(:disabled):hover { color: var(--bg); }
+
+    .cf-submit span,
+    .cf-arrow { position: relative; z-index: 1; }
+
+    .cf-arrow {
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+
+    .cf-submit:not(:disabled):hover .cf-arrow { transform: translateX(4px); }
+
+    .cf-toast {
+      margin-top: 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: all 0.4s ease;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .cf-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+      height: auto;
+    }
+
+    .cf-toast.success { color: var(--accent); }
+    .cf-toast.error   { color: #ff6b6b; }
+
+    /* Right quote col */
+    .contact-quote-col {
+      padding-left: 40px;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cq-mark {
+      font-family: var(--font-serif);
+      font-size: 80px;
+      line-height: 0.6;
+      color: var(--accent);
+      opacity: 0.4;
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .cq-text {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 28px;
+      opacity: 0.88;
+    }
+
+    .cq-text em { color: var(--accent); }
+
+    .cq-divider {
+      width: 32px; height: 1px;
+      background: var(--accent);
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+
+    .cq-author {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .cq-tagline {
+      margin-top: 48px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    .cq-tagline span {
+      display: block;
+      color: rgba(200,240,110,0.5);
+      margin-bottom: 6px;
+      font-size: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+      .contact-quote-col {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding-top: 40px;
+      }
+      .cq-text { font-size: 22px; }
+      .cf-row { grid-template-columns: 1fr; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">adiwrites</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="quotes.html">Quotes</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html" class="active">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="quotes.html">Quotes</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="page">
+
+    <!-- ── Hero ── -->
+    <section class="hero">
+      <div class="hero-glow"></div>
+
+      <div class="hero-inner">
+        <p class="hero-eyebrow">For Curious Minds</p>
+        <h1 class="hero-heading">
+          Words that<br>
+          <em>matter</em>
+          <span class="line2">to the restless.</span>
+        </h1>
+        <p class="hero-sub">
+          A blog at the intersection of history, philosophy, religion, and the human story. Written for those who ask why.
+        </p>
+        <div class="hero-ctas">
+          <a href="blog.html" class="btn-primary">Read the Blog</a>
+          <a href="quotes.html" class="btn-ghost">Browse Quotes</a>
+        </div>
+      </div>
+
+      <!-- Category pills (desktop) -->
+      <div class="hero-categories">
+        <a href="blog.html" class="hero-cat-pill">History</a>
+        <a href="blog.html" class="hero-cat-pill">Philosophy</a>
+        <a href="blog.html" class="hero-cat-pill">Religion</a>
+        <a href="blog.html" class="hero-cat-pill">Personas</a>
+        <a href="blog.html" class="hero-cat-pill">Books</a>
+      </div>
+    </section>
+
+    <!-- ── Featured Posts ── -->
+    <section id="featured">
+      <div class="reveal">
+        <p class="section-eyebrow">Featured Reading</p>
+        <h2 class="section-title">Recently <em>written</em></h2>
+        <p class="section-sub">Handpicked pieces worth your time.</p>
+      </div>
+
+      <!-- Grid is populated by JS -->
+      <div class="featured-grid reveal" id="featured-grid">
+        <!-- Skeleton placeholders while loading -->
+        <div class="post-card large skeleton">
+          <div>
+            <div class="skeleton-line short" style="margin-bottom:20px;"></div>
+            <div class="skeleton-line short" style="margin-bottom:20px;width:20%;"></div>
+            <div class="skeleton-line tall med"></div>
+            <div class="skeleton-line tall" style="width:85%;"></div>
+            <div class="skeleton-line" style="width:90%;"></div>
+            <div class="skeleton-line med"></div>
+          </div>
+          <div class="skeleton-line short" style="margin-top:auto;"></div>
+        </div>
+        <div class="post-card skeleton">
+          <div>
+            <div class="skeleton-line short" style="margin-bottom:20px;"></div>
+            <div class="skeleton-line tall med"></div>
+            <div class="skeleton-line" style="width:90%;"></div>
+          </div>
+          <div class="skeleton-line short" style="margin-top:auto;"></div>
+        </div>
+        <div class="post-card skeleton">
+          <div>
+            <div class="skeleton-line short" style="margin-bottom:20px;"></div>
+            <div class="skeleton-line tall med"></div>
+            <div class="skeleton-line" style="width:90%;"></div>
+          </div>
+          <div class="skeleton-line short" style="margin-top:auto;"></div>
+        </div>
+      </div>
+
+      <div class="posts-cta reveal">
+        <a href="blog.html" class="btn-ghost">View all posts →</a>
+      </div>
+    </section>
+
+    <!-- ── Quote Teaser ── -->
+    <section class="quote-section">
+      <div class="reveal">
+        <p class="section-eyebrow">Collected Wisdom</p>
+        <h2 class="section-title">Words that <em>endure</em></h2>
+        <p class="section-sub">A curated library of quotes for the restless reader.</p>
+      </div>
+
+      <div class="quote-inner reveal">
+        <!-- Fixed-height stage: text swaps inside, layout never shifts -->
+        <div class="quote-stage" id="quote-stage">
+          <p class="quote-featured-text" id="teaser-quote-text">
+            To write is to make sense of the chaos — and find yourself inside it.
+          </p>
+        </div>
+        <p class="quote-attr" id="teaser-quote-author">— Adiwrites</p>
+        <div class="quote-dots" id="teaser-dots"></div>
+        <a href="quotes.html" class="btn-ghost">Explore all quotes →</a>
+      </div>
+    </section>
+
+    <!-- ── Categories ── -->
+    <section id="categories">
+      <div class="reveal">
+        <p class="section-eyebrow">Browse by Topic</p>
+        <h2 class="section-title">Find your <em>curiosity</em></h2>
+        <p class="section-sub">Five corners of the examined world.</p>
+      </div>
+
+      <div class="cats-grid reveal">
+        <a href="blog.html" class="cat-card">
+          <div class="cat-icon">Hx</div>
+          <div class="cat-name">History</div>
+          <div class="cat-count">Coming soon</div>
+        </a>
+        <a href="blog.html" class="cat-card">
+          <div class="cat-icon">φ</div>
+          <div class="cat-name">Philosophy</div>
+          <div class="cat-count">Coming soon</div>
+        </a>
+        <a href="blog.html" class="cat-card">
+          <div class="cat-icon">✦</div>
+          <div class="cat-name">Religion</div>
+          <div class="cat-count">Coming soon</div>
+        </a>
+        <a href="blog.html" class="cat-card">
+          <div class="cat-icon">Ps</div>
+          <div class="cat-name">Personas</div>
+          <div class="cat-count">Coming soon</div>
+        </a>
+        <a href="blog.html" class="cat-card">
+          <div class="cat-icon">Bk</div>
+          <div class="cat-name">Books</div>
+          <div class="cat-count">Coming soon</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section class="contact-section">
+      <div class="reveal">
+        <p class="section-eyebrow">Get in Touch</p>
+        <h2 class="section-title">Let's <em>talk</em></h2>
+        <p class="section-sub">A thought, a question, or just a hello.</p>
+      </div>
+
+      <div class="contact-layout reveal">
+
+        <!-- Form -->
+        <div class="contact-form-col">
+          <div class="cf-row">
+            <div class="cf-field">
+              <label class="cf-label" for="cf-name">Your Name</label>
+              <input class="cf-input" type="text" id="cf-name" placeholder="Marcus Aurelius" />
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="cf-email">Email Address</label>
+              <input class="cf-input" type="email" id="cf-email" placeholder="hello@example.com" />
+            </div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-message">Your Message</label>
+            <textarea class="cf-textarea" id="cf-message" placeholder="What's on your mind…"></textarea>
+          </div>
+          <button class="cf-submit" id="cf-btn" onclick="cfSubmit()">
+            <span id="cf-btn-text">Send Message</span>
+            <span class="cf-arrow" id="cf-arrow">→</span>
+          </button>
+          <div class="cf-toast" id="cf-toast"></div>
+        </div>
+
+        <!-- Quote -->
+        <div class="contact-quote-col">
+          <span class="cq-mark">"</span>
+          <p class="cq-text">
+            The object of life is not to be on the side of the majority, but to <em>escape finding oneself in the ranks of the insane.</em>
+          </p>
+          <div class="cq-divider"></div>
+          <p class="cq-author">Marcus Aurelius &nbsp;·&nbsp; Meditations</p>
+          <div class="cq-tagline">
+            <span>— Adiwrites</span>
+            History. Philosophy. The examined life.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="footer">
+      <span class="footer-logo">adiwrites</span>
+      <span class="footer-copy">© Adiwrites 2026 — All rights reserved</span>
+    </footer>
+
+  </div><!-- /page -->
+
+  <script>
+    // ── Hamburger menu ──
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('nav-mobile');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navMobile.classList.toggle('open');
+    });
+    navMobile.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navMobile.classList.remove('open');
+      });
+    });
+
+    // ── Scroll reveal ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(r => observer.observe(r));
+
+    // ════════════════════════════════
+    // FEATURED POSTS — loaded from posts.json
+    // ════════════════════════════════
+    async function loadFeaturedPosts() {
+      const grid = document.getElementById('featured-grid');
+      try {
+        const res = await fetch('data/posts.json');
+        if (!res.ok) throw new Error('fetch failed');
+        const posts = await res.json();
+
+        // Deduplicate by slug, then take the first 3
+        const seen = new Set();
+        const unique = posts.filter(p => {
+          if (seen.has(p.slug)) return false;
+          seen.add(p.slug);
+          return true;
+        });
+        const featured = unique.slice(0, 3);
+
+        grid.innerHTML = featured.map((post, i) => `
+          <a href="${post.slug}" class="post-card ${i === 0 ? 'large' : ''}">
+            <div>
+              <p class="post-tag">${post.tag}</p>
+              <p class="post-num">№ ${String(i + 1).padStart(3, '0')}</p>
+              <h3 class="post-title">${post.title}</h3>
+              <p class="post-excerpt">${post.excerpt}</p>
+            </div>
+            <div class="post-footer">
+              <span class="post-meta">${post.date} · ${post.read}</span>
+              <span class="post-read">Read →</span>
+            </div>
+          </a>
+        `).join('');
+
+      } catch (err) {
+        console.error('Featured posts failed to load:', err);
+        // Fallback: hide grid gracefully
+        grid.innerHTML = '<p style="color:var(--muted);font-family:var(--font-mono);font-size:12px;">Posts unavailable.</p>';
+      }
+    }
+
+    // ════════════════════════════════
+    // QUOTE ROTATOR — fixed-height swap
+    // ════════════════════════════════
+    const teaserQuotes = [
+      { text: "To write is to make sense of the chaos — and find yourself inside it.", author: "Adiwrites" },
+      { text: "History is written by the victors — but remembered by those who suffered.", author: "Adiwrites" },
+      { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Marcus Aurelius" },
+      { text: "A reader lives a thousand lives before he dies. The man who never reads lives only one.", author: "George R.R. Martin" },
+      { text: "The mind is not a vessel to be filled, but a fire to be kindled.", author: "Plutarch" },
+    ];
+
+    let currentQuote = 0;
+    const quoteText   = document.getElementById('teaser-quote-text');
+    const quoteAuthor = document.getElementById('teaser-quote-author');
+    const dotsContainer = document.getElementById('teaser-dots');
+
+    function buildDots() {
+      dotsContainer.innerHTML = '';
+      teaserQuotes.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goToQuote(i));
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function goToQuote(index) {
+      if (index === currentQuote) return;
+      currentQuote = index;
+
+      // Fade out
+      quoteText.classList.add('hidden');
+      quoteAuthor.classList.add('hidden');
+
+      setTimeout(() => {
+        quoteText.textContent = teaserQuotes[index].text;
+        quoteAuthor.textContent = '— ' + teaserQuotes[index].author;
+        // Fade in
+        quoteText.classList.remove('hidden');
+        quoteAuthor.classList.remove('hidden');
+        document.querySelectorAll('.quote-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === index);
+        });
+      }, 350);
+    }
+
+    buildDots();
+    setInterval(() => {
+      goToQuote((currentQuote + 1) % teaserQuotes.length);
+    }, 5000);
+
+    // ── Contact form ──
+    async function cfSubmit() {
+      const name    = document.getElementById('cf-name').value.trim();
+      const email   = document.getElementById('cf-email').value.trim();
+      const message = document.getElementById('cf-message').value.trim();
+      const btn     = document.getElementById('cf-btn');
+      const btnText = document.getElementById('cf-btn-text');
+      const arrow   = document.getElementById('cf-arrow');
+
+      if (!name || !email || !message) {
+        cfToast('Please fill in your name, email, and message.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btnText.textContent = 'Sending…';
+      arrow.textContent = '↻';
+
+      try {
+        const response = await fetch('https://formspree.io/f/mzdoogaw', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, message })
+        });
+
+        if (response.ok) {
+          cfToast('✦  Message received — talk soon.', 'success');
+          document.getElementById('cf-name').value = '';
+          document.getElementById('cf-email').value = '';
+          document.getElementById('cf-message').value = '';
+        } else {
+          const data = await response.json();
+          const errMsg = data?.errors ? data.errors.map(e => e.message).join(', ') : 'Something went wrong. Please try again.';
+          cfToast(errMsg, 'error');
+        }
+      } catch {
+        cfToast('Network error — please check your connection.', 'error');
+      }
+
+      btnText.textContent = 'Send Message';
+      arrow.textContent = '→';
+      btn.disabled = false;
+    }
+
+    function cfToast(msg, type) {
+      const toast = document.getElementById('cf-toast');
+      toast.innerHTML = msg;
+      toast.className = 'cf-toast ' + type + ' show';
+      setTimeout(() => toast.classList.remove('show'), 6000);
+    }
+
+    // ── Init ──
+    document.addEventListener('DOMContentLoaded', loadFeaturedPosts);
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
+  <script>
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  </script>
+
+  <style>
+    html { scroll-behavior: auto !important; }
+  </style>
+
+</body>
+</html>
