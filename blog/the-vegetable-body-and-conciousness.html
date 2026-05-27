@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" sizes="32x32" href="adiwrites-favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="adiwrites-favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
   <meta name="description" content="Exploring the ancient and esoteric philosophy of the vegetative soul, the etheric life force, and the plant-like intelligence humming beneath human consciousness." />
   <meta name="post-title"content="The Vegetable Body and Consciousness: Rediscovering the Plant-Like Wisdom Within Us">
   <meta name="post-category" content="Philosophy">
@@ -283,7 +283,11 @@
     .all-essays-link:hover { color: var(--accent); gap: 14px; }
 
     /* Essay cards */
-    .essay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .essay-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 2px;
+}
 
     .essay-card {
       display: flex; flex-direction: column; justify-content: space-between;
@@ -484,34 +488,8 @@
         <a href="../blog.html" class="all-essays-link">All Essays &rarr;</a>
       </div>
 
-      <div class="essay-grid">
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Philosophy</span>
-            <h3 class="card-title">The Faith of Fire and Shadow</h3>
-            <p class="card-excerpt">Zoroastrianism, Zarathustra, and the cosmic origins of dualism between light and darkness.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
+     <div class="essay-grid" id="essay-navigation"></div>
 
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">History</span>
-            <h3 class="card-title">The Library of Alexandria</h3>
-            <p class="card-excerpt">Separating the historical reality of the ancient world's ultimate archive from romantic modern myths.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
-
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Books</span>
-            <h3 class="card-title">Marginalia of the Masters</h3>
-            <p class="card-excerpt">What the handwritten notes of famous historical thinkers reveal about their reading habits.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
-      </div>
 
       <div class="all-essays-wrap">
         <a href="../blog.html" class="all-essays-button">Browse All Articles</a>
@@ -525,6 +503,7 @@
     <span class="footer-logo">adiwrites</span>
     <span class="footer-copy">&copy; 2026 Adiwrites. All rights reserved.</span>
   </footer>
+  <script src="../js/article-nav.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
 
 <script>
