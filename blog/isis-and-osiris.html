@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" sizes="32x32" href="adiwrites-favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="adiwrites-favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
   <meta name="description" content="Exploring the timeless Egyptian myth of love, betrayal, brutal murder, and cosmic resurrection that defined kingship and the afterlife." />
   <meta name="post-title"content="The Myth of Isis and Osiris">
   <meta name="post-category" content="History/Personas">
@@ -283,7 +283,11 @@
     .all-essays-link:hover { color: var(--accent); gap: 14px; }
 
     /* Essay cards */
-    .essay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .essay-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 2px;
+}
 
     .essay-card {
       display: flex; flex-direction: column; justify-content: space-between;
@@ -407,7 +411,7 @@
 
       <h1 class="post-title">The Myth of Isis and Osiris</h1>
 
-      <p class="post-dek">The Myth of Isis and Osiris is hands down one of the most moving and powerful stories to come out of ancient Egypt. It's this epic tale of love, betrayal, brutal murder, and ultimately resurrection that shaped how the Egyptians saw life, death, kingship, and the whole cycle of renewal.</p>
+      <p class="post-dek">Exploring the timeless Egyptian myth of love, betrayal, brutal murder, and cosmic resurrection that defined kingship and the afterlife.</p>
 
       <div class="post-meta-row" aria-label="Post metadata">
         <span>History</span>
@@ -429,7 +433,7 @@
     <!-- ARTICLE -->
     <article class="article-box">
       <div class="article-content">
-        <p>Honestly, it's stayed relevant for thousands of years because it hits on some really deep human stuff.</p>
+        <p>The Myth of Isis and Osiris is hands down one of the most moving and powerful stories to come out of ancient Egypt. It's this epic tale of love, betrayal, brutal murder, and ultimately resurrection that shaped how the Egyptians saw life, death, kingship, and the whole cycle of renewal. Honestly, it's stayed relevant for thousands of years because it hits on some really deep human stuff.</p>
 
         <h2>The Golden Age Under Osiris</h2>
         <p>Picture this: the earth god Geb and sky goddess Nut have four kids—Osiris, Isis, Set, and Nephthys. Osiris, the oldest, steps up as king of Egypt and marries his sister Isis. Together they're this dream team. Osiris teaches people how to farm, make laws, build cities, play music—basically civilizing the whole place. Egypt under him is peaceful, prosperous, full of ma'at (that perfect balance and truth vibe).</p>
@@ -481,34 +485,8 @@
         <a href="../blog.html" class="all-essays-link">All Essays &rarr;</a>
       </div>
 
-      <div class="essay-grid">
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Philosophy</span>
-            <h3 class="card-title">The Vegetable Body and Consciousness</h3>
-            <p class="card-excerpt">Rediscovering the vegetative soul and the quiet, plant-like life force active within human biology.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
+      <div class="essay-grid" id="essay-navigation"></div>
 
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Philosophy</span>
-            <h3 class="card-title">The Faith of Fire and Shadow</h3>
-            <p class="card-excerpt">Zoroastrianism, Zarathustra, and the cosmic origins of dualism between light and darkness.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
-
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Books</span>
-            <h3 class="card-title">Marginalia of the Masters</h3>
-            <p class="card-excerpt">What the handwritten notes of famous historical thinkers reveal about their reading habits.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
-      </div>
 
       <div class="all-essays-wrap">
         <a href="../blog.html" class="all-essays-button">Browse All Articles</a>
@@ -522,6 +500,7 @@
     <span class="footer-logo">adiwrites</span>
     <span class="footer-copy">&copy; 2026 Adiwrites. All rights reserved.</span>
   </footer>
+  <script src="../js/article-nav.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
 
 <script>
