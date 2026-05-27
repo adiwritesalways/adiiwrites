@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" sizes="32x32" href="adiwrites-favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="adiwrites-favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
   <meta name="description" content="Few figures in the biblical imagination cast as long a shadow as Elijah the Tishbite — a prophet so extraordinary that his story did not simply end. It ascended." />
   <meta name="post-title"content="The Return of Elijah: Fire, Prophecy, and the Hope of a Messenger Before the End">
   <meta name="post-category" content="Religion/Personas">
@@ -263,7 +263,11 @@
     }
     .all-essays-link:hover { color: var(--accent); gap: 14px; }
 
-    .essay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .essay-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 2px;
+}
 
     .essay-card {
       display: flex; flex-direction: column; justify-content: space-between;
@@ -456,34 +460,8 @@
         <a href="../blog.html" class="all-essays-link">All Essays →</a>
       </div>
 
-      <div class="essay-grid">
-        <a href="joachim-of-fiore.html" class="essay-card">
-          <div>
-            <span class="card-meta">Religion · 9 min read</span>
-            <h3 class="card-title">Joachim of Fiore: The Medieval Mystic Whose Trinitarian Prophecy Shaped Our Idea of the Future</h3>
-            <p class="card-excerpt">In 12th-century Calabria, a Cistercian abbot experienced divine illuminations that redefined how Christians understood history and the Trinity.</p>
-          </div>
-          <span class="card-link">Read essay →</span>
-        </a>
+      <div class="essay-grid" id="essay-navigation"></div>
 
-        <a href="marcus-aurelius.html" class="essay-card">
-          <div>
-            <span class="card-meta">Personas · 7 min read</span>
-            <h3 class="card-title">Marcus Aurelius: The Emperor Who Wrote to No One</h3>
-            <p class="card-excerpt">The Meditations were never meant to be read. A private conversation with himself — at the height of power.</p>
-          </div>
-          <span class="card-link">Read essay →</span>
-        </a>
-
-        <a href="the-examined-life.html" class="essay-card">
-          <div>
-            <span class="card-meta">Philosophy · 8 min read</span>
-            <h3 class="card-title">The Examined Life: Why Socrates Was Right to Die for an Idea</h3>
-            <p class="card-excerpt">In 399 BC, Socrates chose the hemlock. Not out of despair, but out of a conviction so pure it still unsettles us.</p>
-          </div>
-          <span class="card-link">Read essay →</span>
-        </a>
-      </div>
 
       <div class="all-essays-wrap">
         <a href="../blog.html" class="all-essays-button">← Back to all essays</a>
@@ -495,6 +473,7 @@
       <span class="footer-logo">adiwrites</span>
       <span class="footer-copy">© Adiwrites 2026 — All rights reserved</span>
     </footer>
+    <script src="../js/article-nav.js"></script>
 
   </main>
 
