@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" sizes="32x32" href="adiwrites-favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="adiwrites-favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
   
   <!-- SEO & Content Architecture Meta Tags -->
   <meta name="description" content="An in-depth exploration of St. Francis of Assisi's revolutionary ministry, the structural rise of the Franciscan Orders, his eco-theology, and an analysis of medieval ascetic marital paradigms." />
@@ -184,7 +184,11 @@
     .all-essays-link:hover { color: var(--accent); gap: 14px; }
 
     /* Essay cards */
-    .essay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .essay-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+gap: 2px;
+}
     .essay-card {
       display: flex; flex-direction: column; justify-content: space-between; padding: 32px 28px;
       border: 1px solid var(--border); border-radius: 26px; background: rgba(19,22,30,0.4); min-height: 240px;
@@ -337,34 +341,8 @@
         <a href="../blog.html" class="all-essays-link">All Essays &rarr;</a>
       </div>
 
-      <div class="essay-grid">
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">History</span>
-            <h3 class="card-title">Exploring Judaism: Origins, Spread, and Core Beliefs</h3>
-            <p class="card-excerpt">Tracing the journey of a covenant faith—from its ancestral Bronze Age roots and global migration to its shifting paradigms of divine names.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
+      <div class="essay-grid" id="essay-navigation"></div>
 
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Philosophy</span>
-            <h3 class="card-title">Enlightenment Unveiled</h3>
-            <p class="card-excerpt">A journey through the origins, development, and branches of Buddhism from meditation process to global faith.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
-
-        <div class="essay-card">
-          <div>
-            <span class="card-meta">Philosophy</span>
-            <h3 class="card-title">Lucifer the Light Bearer</h3>
-            <p class="card-excerpt">Unveiling the cosmic catalyst of awakening and human consciousness from ancient mystery traditions.</p>
-          </div>
-          <a href="#" class="card-link">Read Essay &rarr;</a>
-        </div>
-      </div>
 
       <div class="all-essays-wrap">
         <a href="../blog.html" class="all-essays-button">Browse All Articles</a>
@@ -378,6 +356,7 @@
     <span class="footer-logo">adiwrites</span>
     <span class="footer-copy">&copy; 2026 Adiwrites. All rights reserved.</span>
   </footer>
+  <script src="../js/article-nav.js"></script>
 
   <script>
     const hamburger = document.getElementById('hamburger');
@@ -426,5 +405,7 @@ requestAnimationFrame(raf);
     
 </style>
 
+</body>
+</html>
 </body>
 </html>
