@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog — Adiwrites</title>
   <meta name="description" content="Essays on history, philosophy, religion, personas, and books. Written for curious minds." />
-  <link rel="icon" type="image/png" sizes="32x32" href="adiwrites-favicon.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="adiwrites-favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -159,16 +159,15 @@
       </div>
 
       <div class="blog-filters">
-  <button class="blog-filter-btn active" onclick="blogFilter('all', this)">All</button>
-  <button class="blog-filter-btn" onclick="blogFilter('history', this)">History</button>
-  <button class="blog-filter-btn" onclick="blogFilter('philosophy', this)">Philosophy</button>
-  <button class="blog-filter-btn" onclick="blogFilter('religion', this)">Religion</button>
-  <button class="blog-filter-btn" onclick="blogFilter('personas', this)">Personas</button>
-  <button class="blog-filter-btn" onclick="blogFilter('books', this)">Books</button>
-</div>
+        <button class="blog-filter-btn active" data-cat="all"         onclick="blogFilter('all', this)">All</button>
+        <button class="blog-filter-btn"         data-cat="history"    onclick="blogFilter('history', this)">History</button>
+        <button class="blog-filter-btn"         data-cat="philosophy" onclick="blogFilter('philosophy', this)">Philosophy</button>
+        <button class="blog-filter-btn"         data-cat="religion"   onclick="blogFilter('religion', this)">Religion</button>
+        <button class="blog-filter-btn"         data-cat="personas"   onclick="blogFilter('personas', this)">Personas</button>
+        <button class="blog-filter-btn"         data-cat="books"      onclick="blogFilter('books', this)">Books</button>
+      </div>
 
-<div id="posts-container" class="blog-grid"></div>
-
+      <div id="posts-container" class="blog-grid"></div>
 
       <div class="blog-pagination">
         <div class="blog-page-info">
@@ -208,15 +207,25 @@
       religion: 'Religion', personas: 'Personas', books: 'Books'
     };
 
-    // Load posts.json
+    // Load posts.json, then apply any ?category= param from the URL
     fetch('data/posts.json')
       .then(r => r.json())
       .then(data => {
-        // Sort newest first
         allPosts = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-        blogRender();
-      })
-    
+
+        // ── URL param filtering (from index.html category cards) ──
+        const params = new URLSearchParams(window.location.search);
+        const cat = params.get('category'); // e.g. "history"
+        if (cat) {
+          const btn = document.querySelector(`.blog-filter-btn[data-cat="${cat}"]`);
+          if (btn) {
+            blogFilter(cat, btn); // sets filter + renders
+            return;              // skip the default blogRender() below
+          }
+        }
+
+        blogRender(); // default: show all
+      });
 
     function blogFilter(cat, btn) {
       currentFilter = cat;
@@ -226,22 +235,13 @@
       blogRender();
     }
 
-   function getFiltered() {
-
-if (currentFilter === 'all')
-return allPosts;
-
-return allPosts.filter(p => {
-
-if (Array.isArray(p.category)) {
-return p.category.includes(currentFilter);
-}
-
-return p.category === currentFilter;
-
-});
-
-}
+    function getFiltered() {
+      if (currentFilter === 'all') return allPosts;
+      return allPosts.filter(p => {
+        if (Array.isArray(p.category)) return p.category.includes(currentFilter);
+        return p.category === currentFilter;
+      });
+    }
 
     function blogRender() {
       const filtered = getFiltered();
@@ -276,13 +276,9 @@ return p.category === currentFilter;
             '<p class="blog-card-excerpt">' + p.excerpt + '</p>' +
           '</div>' +
           '<div class="blog-card-footer">' +
-'<span class="blog-card-meta">' +
-p.date +
-' &nbsp;·&nbsp; ' +
-p.read +
-'</span>' +
-'<span class="blog-card-read">Read →</span>' +
-'</div>';
+            '<span class="blog-card-meta">' + p.date + ' &nbsp;·&nbsp; ' + p.read + '</span>' +
+            '<span class="blog-card-read">Read →</span>' +
+          '</div>';
         grid.appendChild(card);
       });
 
@@ -320,42 +316,31 @@ p.read +
       document.querySelector('.page-inner').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   </script>
+
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
+  <script>
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
 
-<script>
-const lenis = new Lenis({
-  duration: 1.2, // Scroll duration
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function for smooth transitions
-  direction: 'vertical', // Scroll direction: vertical or horizontal
-  gestureDirection: 'vertical', // Gesture direction: vertical, horizontal, or both
-  smooth: true, // Enable smooth scrolling
-  mouseMultiplier: 1, // Mouse scroll speed multiplier
-  smoothTouch: false, // Disable smooth scrolling for touch devices
-  touchMultiplier: 2, // Touch scroll speed multiplier
-  infinite: false, // Disable infinite scroll
-});
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  </script>
 
-// Optional: Listen to scroll events
-lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
-  console.log({ scroll, limit, velocity, direction, progress });
-});
+  <style>
+    html { scroll-behavior: auto !important; }
+  </style>
 
-// Animation frame loop function
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-</script>
-
-
-<style>
-    
-    html  {
-    scroll-behavior: auto !important; /* Disables default smooth scrolling */
-}
-    
-    
-</style>
 </body>
 </html>
