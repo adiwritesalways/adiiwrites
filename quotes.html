@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotes — Adiwrites</title>
+  <meta name="description" content="A curated library of quotes for the restless reader. Philosophy, Stoicism, History, Literature, and original Adiwrites thoughts." />
+  <link rel="icon" type="image/png" sizes="32x32" href="/adiwrites-favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/adiwrites-favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d0f14;
+      --surface:    #13161e;
+      --border:     rgba(255,255,255,0.07);
+      --border2:    rgba(255,255,255,0.12);
+      --text:       #ffffff;
+      --muted:      rgba(232,226,217,0.42);
+      --muted2:     rgba(232,226,217,0.18);
+      --accent:     #C8F06E;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono:  'DM Mono', monospace;
+      --font-sans:  'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ════════════════════════════════
+       NAVBAR
+    ════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13, 15, 20, 0.652);
+      backdrop-filter: blur(48px);
+      -webkit-backdrop-filter: blur(48px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-sans);
+      font-weight: 550;
+      font-size: 26px;
+      letter-spacing: -0.05em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--accent); }
+    .nav-links a.active::after { width: 100%; }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--muted);
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--text); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--text); }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(13,15,20,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 48px;
+      z-index: 99;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-mobile a:hover,
+    .nav-mobile a.active { color: var(--accent); }
+
+    /* ════════════════════════════════
+       PAGE WRAPPER
+    ════════════════════════════════ */
+    .page {
+      position: relative;
+      z-index: 1;
+      padding-top: 68px;
+    }
+
+    .page-inner {
+      padding: 80px 48px 96px;
+    }
+
+    /* ════════════════════════════════
+       QUOTES — original styles preserved
+    ════════════════════════════════ */
+    .aq-wrap {
+      width: 100%;
+      color: var(--text);
+      font-family: var(--font-serif);
+    }
+
+    .aq-wrap * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Page header */
+    .aq-header {
+      margin-bottom: 64px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .aq-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .aq-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .aq-title {
+      font-family: var(--font-sans);
+      font-size: 48px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .aq-title em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .aq-count {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .aq-count strong {
+      display: block;
+      font-family: var(--font-serif);
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 0;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    /* Filter tabs */
+    .aq-filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .aq-filter-btn {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .aq-filter-btn:hover,
+    .aq-filter-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Quote grid */
+    .aq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 64px;
+    }
+
+    .aq-card {
+      padding: 40px 36px;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: border-color 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: aqFadeIn 0.5s ease forwards;
+      background: var(--surface);
+    }
+
+    .aq-card:nth-child(1)  { animation-delay: 0.05s; }
+    .aq-card:nth-child(2)  { animation-delay: 0.10s; }
+    .aq-card:nth-child(3)  { animation-delay: 0.15s; }
+    .aq-card:nth-child(4)  { animation-delay: 0.20s; }
+    .aq-card:nth-child(5)  { animation-delay: 0.25s; }
+    .aq-card:nth-child(6)  { animation-delay: 0.30s; }
+    .aq-card:nth-child(7)  { animation-delay: 0.35s; }
+    .aq-card:nth-child(8)  { animation-delay: 0.40s; }
+    .aq-card:nth-child(9)  { animation-delay: 0.45s; }
+    .aq-card:nth-child(10) { animation-delay: 0.50s; }
+
+    @keyframes aqFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .aq-card.featured {
+      grid-column: span 2;
+      min-height: 180px;
+      background: rgba(200,240,110,0.03);
+      border-color: rgba(200,240,110,0.15);
+    }
+
+    .aq-card.featured .aq-quote-text { font-size: 28px; }
+
+    .aq-card:hover { border-color: var(--border2); }
+    .aq-card.featured:hover { border-color: rgba(200,240,110,0.3); }
+
+    .aq-num {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.2em;
+      color: var(--muted2);
+      margin-bottom: 20px;
+    }
+
+    .aq-quote-mark {
+      font-family: var(--font-serif);
+      font-size: 48px;
+      line-height: 0.5;
+      color: var(--accent);
+      opacity: 0.25;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .aq-card.featured .aq-quote-mark { opacity: 0.35; }
+
+    .aq-quote-text {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--text);
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .aq-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .aq-author {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .aq-tag {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .aq-share {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 7px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .aq-share:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .aq-share svg {
+      width: 10px; height: 10px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Pagination */
+    .aq-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .aq-page-info {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .aq-page-info strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .aq-page-btns { display: flex; gap: 4px; }
+
+    .aq-page-btn {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .aq-page-btn:hover,
+    .aq-page-btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .aq-page-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+    .aq-page-btn.active { background: rgba(200,240,110,0.06); }
+
+    /* ════════════════════════════════
+       FOOTER
+    ════════════════════════════════ */
+    .footer {
+      position: relative;
+      z-index: 1;
+      padding: 32px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 18px;
+      letter-spacing: -0.05em;
+      color: var(--text);
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 768px) {
+      .nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-inner { padding: 60px 24px 80px; }
+    }
+
+    @media (max-width: 680px) {
+      .aq-grid { grid-template-columns: 1fr; }
+      .aq-card.featured { grid-column: span 1; }
+      .aq-card.featured .aq-quote-text { font-size: 22px; }
+      .aq-title { font-size: 34px; }
+      .aq-header { flex-direction: column; align-items: flex-start; }
+      .aq-count { text-align: left; }
+      .aq-pagination { flex-direction: column; gap: 20px; align-items: flex-start; }
+      .footer { padding: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">adiwrites</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="quotes.html" class="active">Quotes</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="quotes.html" class="active">Quotes</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <div class="page">
+    <div class="page-inner">
+      <div class="aq-wrap">
+
+        <!-- Header -->
+        <div class="aq-header">
+          <div>
+            <p class="aq-eyebrow">Collected Wisdom</p>
+            <h1 class="aq-title">Words that <em>endure</em></h1>
+          </div>
+          <div class="aq-count">
+            <strong id="aq-total">42</strong>
+            Quotes &amp; counting
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="aq-filters">
+          <button class="aq-filter-btn active" onclick="aqFilter('all', this)">All</button>
+          <button class="aq-filter-btn" onclick="aqFilter('philosophy', this)">Philosophy</button>
+          <button class="aq-filter-btn" onclick="aqFilter('stoicism', this)">Stoicism</button>
+          <button class="aq-filter-btn" onclick="aqFilter('history', this)">History</button>
+          <button class="aq-filter-btn" onclick="aqFilter('literature', this)">Literature</button>
+          <button class="aq-filter-btn" onclick="aqFilter('original', this)">Adiwrites</button>
+        </div>
+
+        <!-- Quote Grid -->
+        <div class="aq-grid" id="aq-grid"></div>
+
+        <!-- Pagination -->
+        <div class="aq-pagination">
+          <div class="aq-page-info">
+            Page <strong id="aq-page-cur">1</strong> of <strong id="aq-page-total">5</strong>
+          </div>
+          <div class="aq-page-btns" id="aq-page-btns"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-logo">adiwrites</span>
+      <span class="footer-copy">© Adiwrites 2026 — All rights reserved</span>
+    </footer>
+  </div>
+
+  <script>
+    // ── Hamburger ──
+    const hamburger = document.getElementById('hamburger');
+    const navMobile = document.getElementById('nav-mobile');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navMobile.classList.toggle('open');
+    });
+    navMobile.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navMobile.classList.remove('open');
+      });
+    });
+
+    // ── Quote data ──
+    var AQ_QUOTES = [
+      { text: "The object of life is not to be on the side of the majority, but to escape finding oneself in the ranks of the insane.", author: "Marcus Aurelius", tag: "stoicism" },
+      { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche", tag: "philosophy" },
+      { text: "Not all those who wander are lost.", author: "J.R.R. Tolkien", tag: "literature" },
+      { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Marcus Aurelius", tag: "stoicism" },
+      { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein", tag: "history" },
+      { text: "You have power over your mind, not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius", tag: "stoicism" },
+      { text: "The unexamined life is not worth living.", author: "Socrates", tag: "philosophy" },
+      { text: "History is written by the victors — but remembered by those who suffered.", author: "Adiwrites", tag: "original" },
+      { text: "To know what you know and what you do not know — that is true knowledge.", author: "Confucius", tag: "philosophy" },
+      { text: "A reader lives a thousand lives before he dies. The man who never reads lives only one.", author: "George R.R. Martin", tag: "literature" },
+      { text: "We are what we repeatedly do. Excellence, then, is not an act but a habit.", author: "Aristotle", tag: "philosophy" },
+      { text: "Waste no more time arguing what a good man should be. Be one.", author: "Marcus Aurelius", tag: "stoicism" },
+      { text: "The only true wisdom is in knowing you know nothing.", author: "Socrates", tag: "philosophy" },
+      { text: "One must imagine Sisyphus happy.", author: "Albert Camus", tag: "philosophy" },
+      { text: "Quiet minds cannot be perplexed or frightened, but go on in fortune or misfortune at their own private pace.", author: "Robert Louis Stevenson", tag: "literature" },
+      { text: "History repeats itself — first as tragedy, then as farce.", author: "Karl Marx", tag: "history" },
+      { text: "The soul that sees beauty may sometimes walk alone.", author: "Johann Wolfgang von Goethe", tag: "literature" },
+      { text: "Silence is the sleep that nourishes wisdom.", author: "Francis Bacon", tag: "philosophy" },
+      { text: "Do not go where the path may lead, go instead where there is no path and leave a trail.", author: "Ralph Waldo Emerson", tag: "original" },
+      { text: "The more I read, the more I acquire, the more certain I am that I know nothing.", author: "Voltaire", tag: "history" },
+      { text: "Every man is a quotation from all his ancestors.", author: "Ralph Waldo Emerson", tag: "philosophy" },
+      { text: "An unexamined people is not worth governing.", author: "Adiwrites", tag: "original" },
+      { text: "It is not death that a man should fear, but he should fear never beginning to live.", author: "Marcus Aurelius", tag: "stoicism" },
+      { text: "The world breaks everyone, and afterward, some are strong at the broken places.", author: "Ernest Hemingway", tag: "literature" },
+      { text: "Those who cannot remember the past are condemned to repeat it.", author: "George Santayana", tag: "history" },
+      { text: "Man is condemned to be free.", author: "Jean-Paul Sartre", tag: "philosophy" },
+      { text: "To read without reflecting is like eating without digesting.", author: "Edmund Burke", tag: "literature" },
+      { text: "Be the change you wish to see in the world.", author: "Mahatma Gandhi", tag: "history" },
+      { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela", tag: "history" },
+      { text: "A word after a word after a word is power.", author: "Margaret Atwood", tag: "literature" },
+      { text: "What we achieve inwardly will change outer reality.", author: "Plutarch", tag: "stoicism" },
+      { text: "To write is to make sense of the chaos — and find yourself inside it.", author: "Adiwrites", tag: "original" },
+      { text: "Nothing in life is to be feared, it is only to be understood.", author: "Marie Curie", tag: "history" },
+      { text: "Choose not to be harmed — and you won't feel harmed.", author: "Marcus Aurelius", tag: "stoicism" },
+      { text: "The mind is not a vessel to be filled, but a fire to be kindled.", author: "Plutarch", tag: "philosophy" },
+      { text: "I am not what happened to me, I am what I choose to become.", author: "Carl Jung", tag: "philosophy" },
+      { text: "Books are mirrors: if a fool looks in, you cannot expect a genius to look out.", author: "Jorge Luis Borges", tag: "literature" },
+      { text: "Almost everything will work again if you unplug it for a few minutes — including you.", author: "Anne Lamott", tag: "original" },
+      { text: "To endure is greater than to dare.", author: "William Makepeace Thackeray", tag: "literature" },
+      { text: "The real voyage of discovery consists not in seeking new landscapes, but in having new eyes.", author: "Marcel Proust", tag: "literature" },
+      { text: "History is not a burden on the memory but an illumination of the soul.", author: "Lord Acton", tag: "history" },
+      { text: "Conform and be dull.", author: "J. Frank Dobie", tag: "philosophy" },
+    ];
+
+    var PER_PAGE = 10;
+    var currentPage = 1;
+    var currentFilter = 'all';
+
+    function aqFilter(tag, btn) {
+      currentFilter = tag;
+      currentPage = 1;
+      document.querySelectorAll('.aq-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      aqRender();
+    }
+
+    function aqGetFiltered() {
+      if (currentFilter === 'all') return AQ_QUOTES;
+      return AQ_QUOTES.filter(q => q.tag === currentFilter);
+    }
+
+    function aqRender() {
+      var filtered = aqGetFiltered();
+      var totalPages = Math.ceil(filtered.length / PER_PAGE);
+      var start = (currentPage - 1) * PER_PAGE;
+      var pageQuotes = filtered.slice(start, start + PER_PAGE);
+
+      document.getElementById('aq-total').textContent = AQ_QUOTES.length;
+      document.getElementById('aq-page-cur').textContent = currentPage;
+      document.getElementById('aq-page-total').textContent = totalPages || 1;
+
+      var grid = document.getElementById('aq-grid');
+      grid.innerHTML = '';
+
+      pageQuotes.forEach(function(q, i) {
+        var globalIndex = start + i + 1;
+        var isFeatured = i === 0 && currentPage === 1 && currentFilter === 'all';
+        var card = document.createElement('div');
+        card.className = 'aq-card' + (isFeatured ? ' featured' : '');
+        card.innerHTML =
+          '<div>' +
+            '<span class="aq-num">№ ' + String(globalIndex).padStart(2, '0') + '</span>' +
+            '<span class="aq-quote-mark">"</span>' +
+            '<p class="aq-quote-text">' + q.text + '</p>' +
+          '</div>' +
+          '<div class="aq-card-footer">' +
+            '<div class="aq-author-block">' +
+              '<span class="aq-author">— ' + q.author + '</span>' +
+              '<span class="aq-tag">' + aqTagLabel(q.tag) + '</span>' +
+            '</div>' +
+            '<button class="aq-share" onclick="aqShare(\'' + encodeURIComponent(q.text) + '\', \'' + encodeURIComponent(q.author) + '\')">' +
+              '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' +
+              'Share' +
+            '</button>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+
+      // Pagination
+      var btns = document.getElementById('aq-page-btns');
+      btns.innerHTML = '';
+
+      var prev = document.createElement('button');
+      prev.className = 'aq-page-btn';
+      prev.textContent = '← Prev';
+      prev.disabled = currentPage === 1;
+      prev.onclick = function() { if (currentPage > 1) { currentPage--; aqRender(); aqScrollTop(); } };
+      btns.appendChild(prev);
+
+      for (var p = 1; p <= totalPages; p++) {
+        (function(pg) {
+          var btn = document.createElement('button');
+          btn.className = 'aq-page-btn' + (pg === currentPage ? ' active' : '');
+          btn.textContent = pg;
+          btn.onclick = function() { currentPage = pg; aqRender(); aqScrollTop(); };
+          btns.appendChild(btn);
+        })(p);
+      }
+
+      var next = document.createElement('button');
+      next.className = 'aq-page-btn';
+      next.textContent = 'Next →';
+      next.disabled = currentPage === totalPages || totalPages === 0;
+      next.onclick = function() { if (currentPage < totalPages) { currentPage++; aqRender(); aqScrollTop(); } };
+      btns.appendChild(next);
+    }
+
+    function aqTagLabel(tag) {
+      var map = { philosophy: 'Philosophy', stoicism: 'Stoicism', history: 'History', literature: 'Literature', original: 'Adiwrites' };
+      return map[tag] || tag;
+    }
+
+    function aqShare(encodedText, encodedAuthor) {
+      var text = decodeURIComponent(encodedText);
+      var author = decodeURIComponent(encodedAuthor);
+      var tweet = '"' + text + '" — ' + author + '\n\nvia @adiwrites';
+      window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(tweet), '_blank');
+    }
+
+    function aqScrollTop() {
+      var el = document.querySelector('.aq-wrap');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    aqRender();
+  </script>
+   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
+
+<script>
+const lenis = new Lenis({
+  duration: 1.2, // Scroll duration
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function for smooth transitions
+  direction: 'vertical', // Scroll direction: vertical or horizontal
+  gestureDirection: 'vertical', // Gesture direction: vertical, horizontal, or both
+  smooth: true, // Enable smooth scrolling
+  mouseMultiplier: 1, // Mouse scroll speed multiplier
+  smoothTouch: false, // Disable smooth scrolling for touch devices
+  touchMultiplier: 2, // Touch scroll speed multiplier
+  infinite: false, // Disable infinite scroll
+});
+
+// Optional: Listen to scroll events
+lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
+  console.log({ scroll, limit, velocity, direction, progress });
+});
+
+// Animation frame loop function
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+</script>
+
+
+<style>
+    
+    html  {
+    scroll-behavior: auto !important; /* Disables default smooth scrolling */
+}
+    
+    
+</style>
+
+</body>
+</html>
